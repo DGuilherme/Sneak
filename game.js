@@ -22,8 +22,8 @@ let velocityY = 0;
 let gameOver = false;
 
 window.onload = () => {
-    board = document.getElementById('board');
-    context = board.getContext('2d');
+    board = document.getElementById("board");
+    context = board.getContext("2d");
 
     appleAudio = new Audio('apple_sound.mp3');
     gameOverAudio = new Audio('game_over_sound.mp3');
@@ -34,9 +34,9 @@ window.onload = () => {
     document.addEventListener('keyup', changeDirection)
 
     board.addEventListener('click', () => {
-        gameOver = false,
-        score = 0
-    })
+        gameOver = false;
+        score = 0;
+    });
 
     foodPlace();
 
@@ -48,13 +48,13 @@ function update (){
     // Clear Screen
     createRectangle(0, 0, board.width, board.height);
 
-    if(gameOver){
+    if (gameOver){
 
         createText('Game Over', board.width / 2, board.height / 2 - 25, 'center', 50 );
 
-        createText(`Score: ${score}`, board.width / 2, board.height / 2 - 25, 'center');
+        createText(`Score: ${score}`, board.width / 2, board.height / 2 + 25, 'center');
 
-        createText('Click to Start Again', (cols * blockSize) / 2, board.height / 2 - 50, 'center');
+        createText('Click to Start Again', (cols * blockSize) / 2, board.height - 50, 'center');
 
         return
     }
@@ -66,7 +66,7 @@ function update (){
     createRectangle(foodX, foodY, blockSize, blockSize, 'lime');
 
     // Eat action
-    if(snakeX == foodX && snakeY == foodY){
+    if (snakeX == foodX && snakeY == foodY){
         tail.push([foodX, foodY])
 
         score += 10;
@@ -77,11 +77,11 @@ function update (){
     }
 
     // Snake Tail
-    for(let i = tail.length -1; i > 0; i-- ){
+    for (let i = tail.length -1; i > 0; i-- ){
         tail[i] = tail[i - 1];
     }
 
-    if(tail.length){
+    if (tail.length){
         tail[0] = [snakeX, snakeY];
     }
 
@@ -91,17 +91,17 @@ function update (){
 
     createRectangle(snakeX, snakeY, blockSize, blockSize,'orange');
 
-    for(let i = 0; i < tail.length; i++){
+    for (let i = 0; i < tail.length; i++){
         createRectangle(tail[i][0], tail[i][1], blockSize, blockSize, 'lime');
     }
 
     // Hit the wall
-    if(snakeX < 0 || snakeX > cols * blockSize || snakeY < 0 || snakeY > rows * blockSize){
+    if (snakeX < 0 || snakeX > cols * blockSize || snakeY < 0 || snakeY > rows * blockSize){
         gameOverEvent();
     }
 
     // Shot herself
-    for(let i = 0; i < tail.length; i++){
+    for (let i = 0; i < tail.length; i++){
         if(snakeX == tail[i][0] && snakeY == tail[i][1]){
             gameOverEvent();
         }
@@ -115,16 +115,17 @@ function foodPlace(){
 }
 
 function changeDirection(e){
-    if(e.code == "ArrayUp"){
+
+    if (e.code == "ArrayUp"){
         velocityX = 0;
         velocityY = -1;
-    }else if(e.code == "ArrayDown"){
+    }else if (e.code == "ArrayDown"){
         velocityX = 0;
         velocityY = 1;
-    }else if(e.code == "ArrayLeft"){
+    }else if (e.code == "ArrayLeft"){
         velocityX = -1;
         velocityY = 0;
-    }else if(e.code == "ArrayRight"){
+    }else if (e.code == "ArrayRight"){
         velocityX = 1;
         velocityY = 0;
     }
