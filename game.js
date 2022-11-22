@@ -4,7 +4,7 @@ let blockSize = 20;
 let cols = 30;
 let rows = 20;
 
-let appleAudio;
+let eatAudio;
 let gameOverAudio;
 
 let snakeX = 0;
@@ -21,12 +21,24 @@ let velocityY = 0;
 
 let gameOver = false;
 
+// Soung effect
+
+const audioMap = new Map();
+
+audioMap.set(1,'game_over_sound.mp3');
+audioMap.set(2,'apple_sound.mp3');
+audioMap.set(3,'gotcha_itch.mp3');
+audioMap.set(4,'hu_waa_waa.mp3');
+audioMap.set(5,'punch.mp3');
+audioMap.set(6,'wilhelm_scream.mp3')
+
+
+
 window.onload = () => {
     board = document.getElementById("board");
     context = board.getContext("2d");
 
-    appleAudio = new Audio('apple_sound.mp3');
-    gameOverAudio = new Audio('game_over_sound.mp3');
+    gameOverAudio = new Audio(audioMap.get(1));
 
     board.width = cols * blockSize;
     board.height = rows * blockSize;
@@ -73,7 +85,8 @@ function update() {
 
         score += 10;
 
-        appleAudio.play();
+        eatAudio = new Audio(audioMap.get(Math.floor(Math.random() * 6) + 2));
+        eatAudio.play();
 
         foodPlace()
     }
